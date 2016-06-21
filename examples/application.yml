@@ -1,0 +1,25 @@
+# config/application.yml
+
+database_name: my_app
+database_user: dan
+
+development: &development
+  host: localhost:3000
+  host_scheme: http
+
+test: *development
+
+production:
+  database_name: my_app_production
+  database_user: my_app
+  database_pass: hunter2
+
+cloud66:
+  web_concurrency: 5
+
+heroku:
+  web_concurrency: 3
+
+  production:
+    RAILS_ENV: production
+    RACK_ENV: production

@@ -1,0 +1,36 @@
+#!/usr/bin/env ruby
+
+require 'chorizo'
+require 'slop'
+require 'colorize'
+
+opts = Slop.parse(help: true) do
+  banner 'Usage: chorizo [options]'
+
+  on :t, :target, 'target host. one of "cloud66" or "heroku"', argument: true
+  on :e, :environment, 'environment. e.x. "staging"', argument: true
+  on :a, :app, 'app. (for heroku only)', argument: :optional
+end
+
+unless opts[:environment]
+  STDERR.puts "please specify an environment".red
+  puts opts
+  exit 1
+end
+
+if opts[:target] == 'heroku' && !opts[:app]
+  STDERR.puts "please specify an app for heroku".red
+  puts opts
+  exit 1
+end
+
+case opts[:target]
+when 'cloud66'
+  Chorizo.new.cloud66 opts[:environment]
+when 'heroku'
+  Chorizo.new.heroku(opts[:environment], opts[:app])
+else
+  STDERR.puts "please specify a valid target".red
+  puts opts
+  exit 1
+end

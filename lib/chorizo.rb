@@ -1,0 +1,60 @@
+require 'yaml'
+
+class Chorizo
+
+  def initialize
+    @host_names = %w(cloud66 heroku)
+  end
+
+  def load_config
+    yml = YAML.load_file('./config/application.yml')
+    hashes, base = yml.partition { |k,v| v.is_a?(Hash) }
+    hashes = hashes.to_h
+    base = base.to_h
+    hosts = {}
+    @host_names.each do |host|
+      hosts[host] = hashes.delete(host) if hashes[host]
+    end
+    { base: base, hosts: hosts, envs: hashes } 
+  end
+
+  def build_output(env, host)
+    configs = load_config
+    output = configs[:base]
+
+    # load environment config
+    if configs[:envs][env]
+      output.merge! configs[:envs][env]
+    else
+      STDERR.puts "WARNING: #{env} specific configuration not found".red
+    end
+
+    # load host config
+    if configs[:hosts][host]
+      hc = configs[:hosts][host]
+      # load embedded env config in host config, if present
+      hc_envs, hc_base = hc.partition { |k,v| v.is_a?(Hash) }
+      hc_env = hc_envs.to_h[env]
+      hc_output = hc_base.to_h
+      hc_output.merge! hc_env if hc_env
+
+      output.merge! hc_output
+    else
+      STDERR.puts "WARNING: #{host} specific configuration not found".red
+    end
+
+    output
+  end
+
+  def cloud66(env)
+    output = build_output(env, 'cloud66')
+    output.each { |k,v| puts "#{k.upcase}=#{v}" }
+  end
+
+  def heroku(env, app)
+    output = build_output(env, 'heroku')
+    cmd_output = output.map { |k,v| "#{k}='#{v}'" }.join(' ')
+    system "heroku config:set #{cmd_output} -a #{app}"
+  end
+
+end
