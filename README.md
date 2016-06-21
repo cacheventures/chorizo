@@ -5,10 +5,19 @@
 Parse and set environment variables on hosting providers Cloud66 and Heroku, in
 the spirit of 12factor apps.  Essentially, this is a minimal version of
 laserlemon/figaro which just functions as an environment variable setter. This
-has the added feature of supporting both environments, so you get to specify
+has the added feature of supporting both target hosts, so you get to specify
 config overrides and/or additions for different environments as well as
 different deploy targets. Both should be represented as first-level key-values
 with the key being the environment name or the deployment target's name.
+Deployment targets can have nested environments, too.
+
+The order of precedence for the final output, with the top being most
+important:
+
+* Target and Environment specific
+* Target specific
+* Environment specific
+* Base config
 
 ## Cloud66
 
