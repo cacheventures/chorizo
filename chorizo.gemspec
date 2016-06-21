@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'chorizo'
-  s.version     = '0.1.0'
+  s.version     = '0.1.1'
   s.date        = '2016-06-20'
   s.summary     = 'Parse and set environment variables on hosting providers'
   s.description = 'Parse and set environment variables on hosting providers'
@@ -11,5 +11,6 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'slop', '~> 3.6'
   s.executables << 'chorizo'
   s.homepage    = 'http://rubygems.org/gems/chorizo'
+  s.homepage    = 'https://github.com/cacheventures/chorizo'
   s.license     = 'MIT'
 end
