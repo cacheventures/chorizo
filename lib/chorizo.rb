@@ -53,7 +53,10 @@ class Chorizo
 
   def heroku(env, app)
     output = build_output(env, 'heroku')
-    cmd_output = output.map { |k,v| "#{k}='#{v}'" }.join(' ')
+    cmd_output = output.map do |k,v|
+      val = "#{v}".shellescape
+      "#{k}=#{val}"
+    end.join(' ')
     system "heroku config:set #{cmd_output} -a #{app}"
   end
 

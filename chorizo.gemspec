@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'chorizo'
-  s.version     = '0.1.1'
+  s.version     = '0.1.2'
   s.date        = '2016-06-20'
   s.summary     = 'Parse and set environment variables on hosting providers'
   s.description = 'Parse and set environment variables on hosting providers'
