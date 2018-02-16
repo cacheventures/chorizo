@@ -48,16 +48,30 @@ class Chorizo
 
   def cloud66(env)
     output = build_output(env, 'cloud66')
-    output.each { |k,v| puts "#{k.upcase}=#{v}" }
+    output.each do |k,v|
+      value = decrypt_value(v)
+      puts "#{k.upcase}=#{value}"
+    end
   end
 
   def heroku(env, app)
     output = build_output(env, 'heroku')
     cmd_output = output.map do |k,v|
-      val = "#{v}".shellescape
-      "#{k}=#{val}"
+      value = decrypt_value(v)
+      escaped_value = "#{v}".shellescape
+      "#{k}=#{escaped_value}"
     end.join(' ')
     system "heroku config:set #{cmd_output} -a #{app}"
+  end
+
+  def decrypt_value(value)
+    if value =~ /^ENC\[/
+      Open3.popen2("eyaml", "decrypt", "-s", value) do |i, o, t|
+        o.read.chomp
+      end
+    else
+      value
+    end
   end
 
 end
