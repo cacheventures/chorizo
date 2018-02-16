@@ -32,6 +32,12 @@ For Heroku, the command `heroku config:set` is called, which will actually
 update the environment variables on your app. As such, you need to specify a
 Heroku app name when using this.
 
+## [hiera-eyaml](https://github.com/voxpupuli/hiera-eyaml)
+
+Since 0.1.3, chorizo supports decrypting values encoded with hiera-eyaml,
+provided you have the necessary keys. It does this by searching for the
+beginning of an encrypted value in each value string.
+
 ## Usage
 
 ```ruby
