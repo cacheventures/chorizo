@@ -9,6 +9,7 @@ Gem::Specification.new do |s|
   s.files       = Dir['lib/*']
   s.add_runtime_dependency 'colorize', '0.7.7'
   s.add_runtime_dependency 'slop', '~> 3.6'
+  s.add_runtime_dependency 'hiera-eyaml', '2.1.0'
   s.executables << 'chorizo'
   s.homepage    = 'http://rubygems.org/gems/chorizo'
   s.homepage    = 'https://github.com/cacheventures/chorizo'
