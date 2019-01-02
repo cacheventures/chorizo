@@ -59,7 +59,7 @@ class Chorizo
     output = build_output(env, 'heroku')
     cmd_output = output.map do |k,v|
       value = decrypt_value(v)
-      escaped_value = "#{v}".shellescape
+      escaped_value = "#{value}".shellescape
       "#{k}=#{escaped_value}"
     end.join(' ')
     system "heroku config:set #{cmd_output} -a #{app}"
