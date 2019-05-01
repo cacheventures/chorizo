@@ -50,7 +50,7 @@ class Chorizo
     output
   end
 
-  def run(env, target: nil, app: nil)
+  def run(env, opts, target: nil, app: nil)
     if @config
       if target && target != @config[env]['target']
         STDERR.puts 'WARNING: target differs from configuration'.red
@@ -66,7 +66,8 @@ class Chorizo
     unless target && @host_names.include?(target)
       error = "please specify a valid target [#{@host_names.join(', ')}]"
       STDERR.puts(error.red)
-      return
+      puts opts
+      exit 1
     end
 
     case target
@@ -75,7 +76,8 @@ class Chorizo
     when 'heroku'
       unless app
         STDERR.puts 'please specify an app for heroku'.red
-        return
+        puts opts
+        exit 1
       end
 
       heroku(env, app)

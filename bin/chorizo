@@ -24,4 +24,6 @@ if opts[:target] == 'heroku' && !opts[:app]
   exit 1
 end
 
-Chorizo.new.run(opts[:environment], target: opts[:target], app: opts[:app])
+Chorizo.new.run(
+  opts[:environment], opts, target: opts[:target], app: opts[:app]
+)
