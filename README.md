@@ -38,6 +38,11 @@ Since 0.1.3, chorizo supports decrypting values encoded with hiera-eyaml,
 provided you have the necessary keys. It does this by searching for the
 beginning of an encrypted value in each value string.
 
+## Config
+
+Since 0.1.7, chorizo supports a config file that should be placed in
+`config/chorizo.yml`. An example of this file can be found [here](examples/chorizo.yml).
+
 ## Usage
 
 ```ruby

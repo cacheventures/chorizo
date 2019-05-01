@@ -1,0 +1,7 @@
+staging:
+  target: heroku
+  app: staging-app-name
+
+production:
+  target: heroku
+  app: app-name

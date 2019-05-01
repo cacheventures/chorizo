@@ -24,13 +24,4 @@ if opts[:target] == 'heroku' && !opts[:app]
   exit 1
 end
 
-case opts[:target]
-when 'cloud66'
-  Chorizo.new.cloud66 opts[:environment]
-when 'heroku'
-  Chorizo.new.heroku(opts[:environment], opts[:app])
-else
-  STDERR.puts "please specify a valid target".red
-  puts opts
-  exit 1
-end
+Chorizo.new.run(opts[:environment], target: opts[:target], app: opts[:app])
