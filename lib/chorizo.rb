@@ -5,7 +5,9 @@ class Chorizo
 
   def initialize
     @host_names = %w(cloud66 heroku)
-    @config = YAML.load_file('./config/chorizo.yml')
+
+    config_file = './config/chorizo.yml'
+    @config = YAML.load_file(config_file) if File.exist?(config_file)
   end
 
   def load_config
@@ -49,10 +51,21 @@ class Chorizo
   end
 
   def run(env, target: nil, app: nil)
-    target ||= @config[env]['target']
+    if @config
+      if target && target != @config[env]['target']
+        STDERR.puts 'WARNING: target differs from configuration'.red
+      end
+      target ||= @config[env]['target']
 
-    unless target
-      STDERR.puts 'please specify a valid target'.red
+      if app && app != @config[env]['app']
+        STDERR.puts 'WARNING: app differs from configuration'.red
+      end
+      app ||= @config[env]['app']
+    end
+
+    unless target && @host_names.include?(target)
+      error = "please specify a valid target [#{@host_names.join(', ')}]"
+      STDERR.puts(error.red)
       return
     end
 
@@ -60,12 +73,6 @@ class Chorizo
     when 'cloud66'
       cloud66(env)
     when 'heroku'
-      if app && app != @config[env]['app']
-        STDERR.puts 'WARNING: App specified in configuration is different'.red
-      end
-
-      app ||= @config[env]['app']
-
       unless app
         STDERR.puts 'please specify an app for heroku'.red
         return
