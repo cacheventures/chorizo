@@ -1,4 +1,7 @@
 # chorizo
+By [Cache Ventures](https://cacheventures.com)
+
+[![Build Status](https://travis-ci.org/cacheventures/chorizo.svg?branch=master)](https://travis-ci.org/cacheventures/chorizo) <a href="https://codeclimate.com/github/cacheventures/chorizo/maintainability"><img src="https://api.codeclimate.com/v1/badges/a99a88d28ad37a79dbf6/maintainability" /></a>
 
 ![Chorizo sausage](chorizo.jpg)
 
