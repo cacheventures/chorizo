@@ -4,12 +4,16 @@ require 'chorizo'
 require 'slop'
 require 'colorize'
 
-opts = Slop.parse(help: true) do
-  banner 'Usage: chorizo [options]'
+opts = Slop.parse do |o|
+  o.banner = 'usage: chorizo [options]'
 
-  on :t, :target, 'target host. one of "cloud66" or "heroku"', argument: true
-  on :e, :environment, 'environment. e.x. "staging"', argument: true
-  on :a, :app, 'app. (for heroku only)', argument: :optional
+  o.string '-t', '--target', 'target host. one of "cloud66" or "heroku"'
+  o.string '-e', '--environment', 'environment. e.x. "staging"'
+  o.string '-a', '--app', 'app. (for heroku only)'
+  o.on '-h', '--help' do
+    puts o
+    exit
+  end
 end
 
 unless opts[:environment]

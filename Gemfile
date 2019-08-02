@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-gem 'slop', '~> 3.6'
+gem 'slop', '~> 4.7'
 gem 'colorize'
 gem 'hiera-eyaml'
 
