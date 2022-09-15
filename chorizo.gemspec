@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.email       = 'dan@cacheventures.com'
   s.files       = Dir['lib/*']
   s.add_runtime_dependency 'colorize', '~> 0.8'
-  s.add_runtime_dependency 'slop', '~> 4.7'
+  s.add_runtime_dependency 'slop', '~> 4.9'
   s.add_runtime_dependency 'hiera-eyaml', '~> 3.0'
   s.executables << 'chorizo'
   s.homepage    = 'http://rubygems.org/gems/chorizo'
